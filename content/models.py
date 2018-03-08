@@ -13,3 +13,6 @@ class PostItem(models.Model):
     content = models.TextField()
     published_date = models.DateTimeField()
     status = models.CharField(max_length=15, choices=POST_ITEM_STATUS_CHOICES)
+
+    def __str__(self):
+        return "{} : {}".format(self.title, self.status)
