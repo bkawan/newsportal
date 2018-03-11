@@ -1,8 +1,8 @@
 from django.contrib import admin
 
+from content.models import PostItem, Category
+
 # Register your models here.
 
-
-from content.models import PostItem
-
 admin.site.register(PostItem)
+admin.site.register(Category)

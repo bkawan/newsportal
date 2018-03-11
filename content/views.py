@@ -1,14 +1,26 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-
 # Create your views here.
-from content.models import PostItem
+from django.views.generic import TemplateView
+
+from content.models import PostItem, Category
 
 
 def all_posts(request):
     posts = PostItem.objects.all()
+    categories = Category.objects.all()
     context = {'all_posts':posts}
     return render(request, 'content/all_post.html', context)
+
+
+class HomePageView(TemplateView):
+    template_name = 'content/all_post.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['all_posts'] = PostItem.objects.all()
+        context['categories'] = Category.objects.all()
+        return context
 
 
 def post_detail(request, post_id):
