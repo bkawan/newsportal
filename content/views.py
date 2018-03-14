@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 # Create your views here.
 from django.views.generic import TemplateView
 
@@ -25,3 +25,19 @@ class HomePageView(TemplateView):
 
 def post_detail(request, post_id):
     return HttpResponse(PostItem.objects.get(id=post_id))
+
+
+def post_create(request):
+    if request.method == 'POST':
+        title = request.POST.get('title')
+        content = request.POST.get('content')
+        post = PostItem(
+            title=title,
+            content=content,
+        )
+        post.save()
+        return redirect('index')
+
+    context = {
+    }
+    return render(request, 'content/post_create.html', context)

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db import models
 
 
@@ -24,3 +26,10 @@ class PostItem(models.Model):
 
     def __str__(self):
         return "{} : {}".format(self.title, self.status)
+
+
+    def save(self, **kwargs):
+
+        if not self.pk:
+            self.published_date = datetime.now()
+        super().save(**kwargs)
