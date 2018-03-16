@@ -18,7 +18,7 @@ class HomePageView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['all_posts'] = PostItem.objects.all()
+        context['all_posts'] = PostItem.objects.all().order_by('-published_date')
         context['categories'] = Category.objects.all()
         return context
 
@@ -35,7 +35,7 @@ def post_create(request):
             title=title,
             content=content,
         )
-        post.save()
+        post.save(status="published")
         return redirect('index')
 
     context = {

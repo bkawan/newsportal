@@ -27,9 +27,9 @@ class PostItem(models.Model):
     def __str__(self):
         return "{} : {}".format(self.title, self.status)
 
-
     def save(self, **kwargs):
-
+        status = kwargs.get('status')
         if not self.pk:
+            self.status = status
             self.published_date = datetime.now()
-        super().save(**kwargs)
+        super().save()
